@@ -167,7 +167,7 @@ Here is a list of API endpoints with live preview.
 ## Security Notes
 * Run the API behind a reverse proxy such as Nginx using
 a domain with SSL enabled. Without SSL, URLs will be sent
-in plain text letting man in the middle steal tokens.
+in plain text letting a man in the middle steal tokens.
 * Double-check permissions for the config file as it
 contains your signing private key. The authenticity of
 the whole system directly depends on that private key! 
