@@ -5,6 +5,7 @@ import string
 import config
 import db
 import crypto
+import codecs
 
 app = FlaskAPI(__name__)
 
@@ -33,7 +34,7 @@ def get_score(token, telegram_id):
             if score:
                 time_now = datetime.now()
                 message = f'{telegram_id},{score[0]},{time_now}'
-                signature = crypto.sign(message, crypto.load_key(config.api_pgp_private_key))
+                signature = crypto.sign(message, crypto.load_key(config.api_ecdsa_private_key))
                 cur.execute(
                     'UPDATE api SET quota = quota - 1 WHERE token = %s;',
                     (token,))
@@ -45,8 +46,7 @@ def get_score(token, telegram_id):
                     'score': score[0],
                     'time': time_now,
                     'message': message,
-                    'armored_message': str(signature[1] | signature[0]),
-                    'armored_signature': str(signature[0]),
+                    'signature': codecs.encode(signature[0], 'hex_codec').decode('ascii')
                 }
             else:
                 cur.close()

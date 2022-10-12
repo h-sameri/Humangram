@@ -31,36 +31,17 @@ API master key: `blahblahblah`
 
 API test token: `3w3uiejcv8buvrs8gj4s1qfpvkmkyd2c`
 
-API public key:
+API public key (hex):
 ```
------BEGIN PGP PUBLIC KEY BLOCK-----
+ee448aee7f08ee746af3bc4463d83e3573fb12f0cd2dcfc5f223df9951eaab8dcb42c6a713d56bf0f6aa6389c775d23d0252ea8e5f9c4dc6f6a5769df07e1e23
+```
 
-mQINBGMt4jUBEADZE6zBi8/BciTvzrXG3VCyC8IaBQaUnWgz4jT5S9yfj38yIGiR
-kXGZTS3wK+BPzve2zgSTpmdO4njgLJsFNa4MgP0cKXvKUU/Lv/lliY+adiAOE+gb
-wWFw8nB7ofIGwN/LOTezC3QQQ8k78nXZ2aZZBUkfwwjmDzkRJdqdvzoOejA7BUxt
-znQ6e9kzNaZej2Ihx5QVH+TR1nIpAyPmu60+T05rPpF/IOZRl2b0nRKHB4lgybyB
-TKXaqYe1Mq9KIEGyYcntEGGHwDb3ivV/fiU78nMGPcWPiXwT+xbgZttRwdB81gJU
-ZB+4HUsc3bw1OnckuGIscpFwjJeaTJvGRR77i/BNZ72IYK2cAlNOl5u6yapdXz8A
-etw2zVO0OF7650PusKOpIuPyC+FpiIbKXL3arV523yNib2gTPAYNlPuBfija4+pn
-i0U9Kex+nI+D2CfQGYOjdn9qUnEgBjje8Pd1hKFdDcLeaP2CFXJSsS+aQAx8+/3K
-Q7weirv6gui/PtMjHpqvzmXI8Rw23ZUWXq6k79u7iuG8WVXmY8pPaKt13a3R//Dp
-ogcnVpggnRnGqVexQLYggXov8L7E+2eqFOBb8C6dJ2tcCuGa7i3XZwYa4nHVl3V7
-5jYs7qs/5CwTGa2n1VmWUGubfkKQgeT8V8VG1OOkp5LOJGo17u35a3wd/wARAQAB
-tCFIdW1hbmdyYW0gKHRlc3QpIDx0ZXN0QHRlc3QudGVzdD6JAkoEEwEIADQFAmMt
-4jkCGw4ECwkIBwUVCAkKCwUWAgMBAAIeARYhBD/Aqum8bNwxceS8uoO9ZF8AZZtD
-AAoJEIO9ZF8AZZtDknsP/0mbP4Bh64spykYgUvQdOVTGsOgxW7ys0/03tLj1vx3E
-sDzZUL1Hur4+szGM/3ac3D3Uk2m+mRcThCN37XLKWd9x1S0k9QMYikzVHt6FKx3h
-hGbCcYqYcmFRjOrBb+27Vl0Jg6ovXZONSH0fZBq3LD2s03aFqgnpXtai7h/HyMYP
-A+mNHNeeVdm8DGj9JJvK1OeJRxzcHJao+4OsDH8Bk4KON7cSC+iGJyl68vDW20xy
-PwyqngYMIAeLJf+ZoWIiU6vKVVkR8bp+VRpSGUhnevSXmCajohGMRcHLg7/q7o0W
-IcOqjjNLkcrogg0xS/IPOx29RB6d4pNFqa/fYxFmP4wHLkGPHHBpzToik02ozD6j
-HEwhGPDciXM/Bhj4CfFrlnupQyhbgl4NLMvVUwpCBVus01pibReigNkiyE/EdD4p
-zyVC7vLR57v4FHNhEKo5bhb8eIeK9rWEDXczVSfYgR80phtVUD8mGOUzPxWVGIeG
-mwj19ijT6zg6XLzRbrywjcmhUnjdkKF0/KPCZ/Nd3jExim5QXr241Bvzd0pU/8KX
-+NDHpxeEiE3RwgB/EVtR5uR0v9E2xIjKtnkkqo95t55ng//XL5QnqIzCE/mWag36
-e/qfIKsRGM1f4c0l6gHeXuj5ebJcDtnXzG/SMtxEe/oCXubn83Q/egllJkfjVU7W
-=NIdU
------END PGP PUBLIC KEY BLOCK-----
+API public key (pem):
+```
+-----BEGIN PUBLIC KEY-----
+MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAE7kSK7n8I7nRq87xEY9g+NXP7EvDNLc/F
+8iPfmVHqq43LQsanE9Vr8PaqY4nHddI9AlLqjl+cTcb2pXad8H4eIw==
+-----END PUBLIC KEY-----
 ```
 
 ## Humanity Proof Score
@@ -137,7 +118,7 @@ steps:
    [requirements.txt](/requirements.txt).
 4) Generate a private/public key pair (if you don't have
    one already) by issuing the command
-   `python3 crypto.py <name> <email> <comment>`.
+   `python3 crypto.py`.
 5) Rename [sample_config.py](/sample_config.py) to
    `config.py` and fill in the values.
 6) Install **postgresql** and create `humangram` database.
@@ -167,7 +148,7 @@ Here is a list of API endpoints with live preview.
 ## Security Notes
 * Run the API behind a reverse proxy such as Nginx using
 a domain with SSL enabled. Without SSL, URLs will be sent
-in plain text letting a man in the middle steal tokens.
+in plain text letting men in the middle steal tokens.
 * Double-check permissions for the config file as it
 contains your signing private key. The authenticity of
 the whole system directly depends on that private key! 
