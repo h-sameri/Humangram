@@ -4,3 +4,5 @@ Flask-API==3.0.post1
 PGPy==0.5.4
 cryptography==37.0.4
 ecdsa==0.18.0
+web3==5.31.1
+evm-sc-utils==0.3.0

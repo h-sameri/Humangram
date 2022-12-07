@@ -34,4 +34,4 @@ if __name__ == '__main__':
         print('Public key:')
         print(public)
     else:
-        print('Usage: python3 crypto.py <name> <email> <comment>')
+        print('Usage: python3 crypto_ecdsa.py <name> <email> <comment>')

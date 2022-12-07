@@ -4,6 +4,7 @@ import random
 import string
 import config
 import db
+import crypto_ecdsa
 import crypto
 import codecs
 
@@ -17,7 +18,39 @@ def index():
     }
 
 
-@app.route('/get_score/<token>/<telegram_id>')
+@app.route('/get_proof/<int:telegram_id>/<int:minimal_score>/<data>')
+def get_proof(telegram_id, minimal_score, data):
+    conn = db.get_connection(config.db_url)
+    cur = conn.cursor()
+    cur.execute(
+        'SELECT score from users WHERE user_id = %s;',
+        (telegram_id,))
+    score = cur.fetchone()
+    if score:
+        if score[0] >= minimal_score:
+            proof, timestamp = crypto.process(data)
+            cur.close()
+            db.close_connection(conn)
+            return {
+                'response': 'OK',
+                'timestamp': timestamp,
+                'proof': proof
+            }
+        else:
+            cur.close()
+            db.close_connection(conn)
+            return {
+                'response': 'Low score'
+            }
+    else:
+        cur.close()
+        db.close_connection(conn)
+        return {
+            'response': 'User not found'
+        }
+
+
+@app.route('/get_score/<token>/<int:telegram_id>')
 def get_score(token, telegram_id):
     conn = db.get_connection(config.db_url)
     cur = conn.cursor()
@@ -34,7 +67,7 @@ def get_score(token, telegram_id):
             if score:
                 time_now = datetime.now()
                 message = f'{telegram_id},{score[0]},{time_now}'
-                signature = crypto.sign(message, crypto.load_key(config.api_ecdsa_private_key))
+                signature = crypto_ecdsa.sign(message, crypto_ecdsa.load_key(config.api_ecdsa_private_key))
                 cur.execute(
                     'UPDATE api SET quota = quota - 1 WHERE token = %s;',
                     (token,))
@@ -90,7 +123,7 @@ def get_quota(token):
         }
 
 
-@app.route('/generate_token/<master_key>/<quota>')
+@app.route('/generate_token/<master_key>/<int:quota>')
 def generate_token(master_key, quota):
     if master_key == config.api_master_key:
         try:
@@ -119,7 +152,7 @@ def generate_token(master_key, quota):
         }
 
 
-@app.route('/add_quota/<master_key>/<token>/<quota>')
+@app.route('/add_quota/<master_key>/<token>/<int:quota>')
 def add_quota(master_key, token, quota):
     if master_key == config.api_master_key:
         try:
